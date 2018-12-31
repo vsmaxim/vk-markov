@@ -1,8 +1,0 @@
-setup.py
-vk_markov/__init__.py
-vk_markov/markov.py
-vk_markov/utils.py
-vk_markov.egg-info/PKG-INFO
-vk_markov.egg-info/SOURCES.txt
-vk_markov.egg-info/dependency_links.txt
-vk_markov.egg-info/top_level.txt
