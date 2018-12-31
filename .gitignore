@@ -6,3 +6,4 @@ dist/
 __pycache__
 .env
 markov
+vk_markov.egg-info/

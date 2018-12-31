@@ -11,6 +11,7 @@ def remove_anything_except_punctuation(word: str) -> str:
 
 
 def retreive_n_posts(api, group_id: int, count: int) -> List[str]:
+    """Returns count of posts from group with group_id using api"""
     posts = []
     for offset in range(1, count, VK_MAXIMUM_POSTS):
         response = api.wall.get(owner_id=-group_id,
@@ -18,4 +19,3 @@ def retreive_n_posts(api, group_id: int, count: int) -> List[str]:
                                 offset=offset)
         posts += [item["text"] for item in response["items"]]
     return posts
-

@@ -32,7 +32,8 @@ if __name__ == '__main__':
             int(os.getenv("GROUP_ID")),
             int(os.getenv("SAMPLES_COUNT")),
         )
-        markov = MarkovWeightedMatrix()
+        chain_length = int(os.getenv("CHAIN_LENGTH"))
+        markov = MarkovWeightedMatrix(chain_length=chain_length)
         for post in posts_to_learn:
             markov.learn(post)
         with open("markov", "wb") as file:

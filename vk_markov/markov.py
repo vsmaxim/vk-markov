@@ -14,6 +14,7 @@ class MarkovWeightedMatrix:
         self._chain_length = 2
 
     def learn(self, text: str) -> None:
+        """Trains Markov chain with sample text input"""
         tokens = text.split()
         for left in range(0,
                           len(tokens),
@@ -39,7 +40,8 @@ class MarkovWeightedMatrix:
                 current_word_dict[next_word] = 0
         self.map[current_word][next_word] += 1
 
-    def update_weighted_matrix(self) -> None:
+    def _update_weighted_matrix(self) -> None:
+        """Updates weighted matrix with actual info from unweighted version"""
         self.weighted_map = deepcopy(self.map)
         for connection in self.weighted_map:
             connections = self.weighted_map[connection]
@@ -49,26 +51,36 @@ class MarkovWeightedMatrix:
 
     @property
     def weights(self) -> dict:
+        """Returns weighted matrix"""
         if not hasattr(self, 'weighted_map'):
-            self.update_weighted_matrix()
+            self._update_weighted_matrix()
         return self.weighted_map
 
-    def get_start_word(self) -> Optional[str]:
+    def _get_start_word(self) -> Optional[str]:
+        """Returns word to start from"""
         keys = list(self.weights.keys())
         random.shuffle(keys)
         for key in keys:
             first_word = key.split()[0]
-            if first_word.capitalize() == first_word and first_word[0].isalpha():
+            first_letter = first_word[0]
+            is_capital = first_letter.capitalize() == first_word
+            is_alpha = first_letter.isalpha()
+            if is_capital and is_alpha:
                 return key
     
     def _pick_next_word(self, word: str) -> str:
+        """
+        Picks the next word in Markov chain using discrete
+        distributed weights. 
+        """
         connections = self.weights[word]
         words = list(connections.keys())
         probabilities = list(connections.values())
         return np.random.choice(words, 1, p=probabilities)[0]
 
     def generate_sentence(self) -> str:
-        current_word = self.get_start_word()
+        """Generates sentence using already fed data into Markov chain"""
+        current_word = self._get_start_word()
         word_chunks = [current_word]
         while current_word in self.weights:
             current_word = self._pick_next_word(current_word)
