@@ -1,0 +1,4 @@
+numpy==1.15.4
+python-dotenv==0.10.1
+tqdm==4.28.1
+vk-api==11.3.0
