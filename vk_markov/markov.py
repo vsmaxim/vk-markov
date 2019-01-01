@@ -9,9 +9,9 @@ from .utils import remove_anything_except_punctuation
 
 class MarkovWeightedMatrix:
     def __init__(self, chain_length: int = 2):
-        self.map = {}
+        self.map: dict = {}
         self._new_words_added = False
-        self._chain_length = 2
+        self._chain_length = chain_length
 
     def learn(self, text: str) -> None:
         """Trains Markov chain with sample text input"""
@@ -67,7 +67,7 @@ class MarkovWeightedMatrix:
             is_alpha = first_letter.isalpha()
             if is_capital and is_alpha:
                 return key
-    
+
     def _pick_next_word(self, word: str) -> str:
         """
         Picks the next word in Markov chain using discrete
